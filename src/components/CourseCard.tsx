@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Check, Clock, Calendar, Users, X, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,6 +19,8 @@ interface CourseCardProps {
     timeSlot: string;
     availability: "Open" | "Limited Seats" | "Full";
     fillingRate: number;
+    totalSeats: number;
+    availableSeats: number;
   };
   isSelected: boolean;
   onSelect: () => void;
@@ -27,14 +28,18 @@ interface CourseCardProps {
 }
 
 const CourseCard = ({ course, isSelected, onSelect, isAlternative = false }: CourseCardProps) => {
-  const getAvailabilityBadge = (availability: string) => {
+  const getAvailabilityBadge = (availability: string, availableSeats: number, totalSeats: number) => {
+    if (availableSeats === 0) {
+      return <Badge variant="destructive" className="badge-full">Course Full - 0/{totalSeats}</Badge>;
+    }
+    
     switch (availability) {
       case "Open":
-        return <Badge className="badge-available">Open</Badge>;
+        return <Badge className="badge-available">{availableSeats}/{totalSeats} Seats</Badge>;
       case "Limited Seats":
-        return <Badge className="badge-limited">Limited Seats</Badge>;
+        return <Badge className="badge-limited">{availableSeats}/{totalSeats} Seats</Badge>;
       case "Full":
-        return <Badge className="badge-full">Full</Badge>;
+        return <Badge variant="destructive" className="badge-full">Course Full - 0/{totalSeats}</Badge>;
       default:
         return <Badge>Unknown</Badge>;
     }
@@ -45,7 +50,7 @@ const CourseCard = ({ course, isSelected, onSelect, isAlternative = false }: Cou
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
           <CardTitle className="text-lg">{course.name}</CardTitle>
-          {getAvailabilityBadge(course.availability)}
+          {getAvailabilityBadge(course.availability, course.availableSeats, course.totalSeats)}
         </div>
         <CardDescription className="line-clamp-2">{course.description}</CardDescription>
       </CardHeader>
@@ -94,13 +99,13 @@ const CourseCard = ({ course, isSelected, onSelect, isAlternative = false }: Cou
         </div>
 
         {/* Filling Rate */}
-        {course.availability !== "Full" && (
+        {course.availability !== "Full" && course.availableSeats > 0 && (
           <div className="mt-3">
             <div className="flex justify-between text-xs text-muted-foreground mb-1">
               <span>Availability</span>
-              <span>{100 - course.fillingRate}% slots left</span>
+              <span>{course.availableSeats} seats remaining</span>
             </div>
-            <Progress value={course.fillingRate} className="h-1.5" />
+            <Progress value={((course.totalSeats - course.availableSeats) / course.totalSeats) * 100} className="h-1.5" />
           </div>
         )}
       </CardContent>

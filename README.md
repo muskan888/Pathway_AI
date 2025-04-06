@@ -1,163 +1,131 @@
-# Course Compass Navigator
+# PathwayAI
+### Smart Course Selector AI Agent
+**Contributors: Rishikesh Kakde, Gayatri Gattani, Rutuja Jangle, Muskan Dhingra**
 
-A modern web application that helps students navigate their academic journey by providing personalized course recommendations and degree planning tools.
-
-## 🌟 Features
-
-- **Smart Course Recommendations**
-  - AI-powered course suggestions based on career goals
-  - Personalized learning paths
-  - Real-time course availability tracking
-
-- **Interactive Course Roadmap**
-  - Visual representation of degree requirements
-  - Course prerequisites mapping
-  - Progress tracking
-
-- **Course Management**
-  - Course selection and scheduling
-  - Availability prediction
-  - Prerequisites checking
-
-- **Career Path Planning**
-  - Career goal alignment
-  - Skill development tracking
-  - Degree program mapping
-
-- **Chat Interface**
-  - AI-powered course advisor
-  - Real-time assistance
-  - Personalized guidance
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js (v16 or higher)
-- npm (v7 or higher)
-- OpenAI API key
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/course-compass-navigator.git
-cd course-compass-navigator
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Create a `.env` file in the root directory:
-```env
-VITE_OPENAI_API_KEY=your_openai_api_key
-VITE_ASSISTANT_ID=your_assistant_id
-VITE_COURSE_LIST_ASSISTANT_ID=your_course_list_assistant_id
-```
-
-4. Start the development server:
-```bash
-npm run dev
-```
-
-The application will be available at `http://localhost:8080`
-
-## 🛠️ Tech Stack
-
-- **Frontend**
-  - React
-  - TypeScript
-  - Tailwind CSS
-  - Framer Motion
-  - React Flow
-  - Shadcn UI
-
-- **Backend**
-  - Express.js
-  - OpenAI API
-  - Node.js
-
-- **Development Tools**
-  - Vite
-  - ESLint
-  - Prettier
-  - TypeScript
-
-## 📁 Project Structure
-
-```
-course-compass-navigator/
-├── src/
-│   ├── components/
-│   │   ├── ui/           # Reusable UI components
-│   │   ├── CourseRoadmapVisualizer.tsx
-│   │   ├── ChatInterface.tsx
-│   │   └── ...
-│   ├── pages/
-│   │   ├── Index.tsx
-│   │   └── ...
-│   ├── services/
-│   │   ├── api.ts
-│   │   └── courseSelector.ts
-│   ├── data/
-│   │   ├── mockData.ts
-│   │   └── degreePrograms.ts
-│   └── App.tsx
-├── public/
-├── .env
-├── package.json
-└── README.md
-```
-
-## 🔧 Configuration
-
-### Environment Variables
-
-- `VITE_OPENAI_API_KEY`: Your OpenAI API key
-- `VITE_ASSISTANT_ID`: OpenAI Assistant ID for course recommendations
-- `VITE_COURSE_LIST_ASSISTANT_ID`: OpenAI Assistant ID for course list management
-
-### API Endpoints
-
-- `/api/chat`: Handle chat interactions
-- `/api/chat/status`: Check chat status and retrieve messages
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- OpenAI for providing the AI capabilities
-- Shadcn UI for the beautiful component library
-- React Flow for the interactive graph visualization
-
-## 📞 Support
-
-For support, email support@coursecompass.com or join our Slack channel.
-
-## 🔄 Updates
-
-- **v1.0.0** - Initial release
-  - Basic course recommendation system
-  - Interactive roadmap visualization
-  - Chat interface
-  - Course management features
-
-## 📱 Screenshots
-
-[Add screenshots of your application here]
+Welcome to **PathwayAI**, an intelligent AI agent that simplifies the course selection journey for students through a clean, modern UI powered by OpenAI's Agent SDK.
 
 ---
 
-Made with ❤️ by the Course Compass Team
+## Project Overview
+
+### **Objective**
+
+Develop an intelligent, student-centric platform that transforms the often overwhelming course selection process into a smooth, personalized experience. This system empowers students to:
+
+- **Explore degree programs and professional pathways** aligned with their long-term career goals (e.g., Data Scientist, Product Manager, UX Designer).
+- **Receive goal-driven course recommendations** tailored to their academic background and credit load preferences (full-time/part-time).
+- Gain clarity on prerequisites by conversing with the agent to understand which foundational courses are required for a desired major or advanced course.
+- **Navigate real-world limitations** like limited seat availability and high-demand course slots with intelligent alternatives and dynamic planning.
+- **Engage in meaningful conversation** with a chatbot assistant to resolve doubts, clarify academic rules, and make informed choices in real-time.
+
+---
+
+#### System Architecture & Methodology
+
+- **Dual-Agent Design**:
+  - **Chatbot Assistant (GPT-4o-mini)**: Engages students in free-form conversation to answer questions about course selection, credits, prerequisites, etc.
+  - **Recommendation Assistant (GPT-4)**: Accepts structured student inputs (e.g., desired profession, major) and responds with tailored course recommendations considering prerequisites, availability, and credit load. The recommendations are shown in the format of a Visual roadmap of course progression vs career goal.
+
+- **OpenAI Assistant SDK**:
+  - Integrated using Python scripts (`Agents_Chat.py`) and Jupyter Notebooks (`CourseSelectorAgent.ipynb`, `UIListCoursesAgent.ipynb`).
+  - Threads and runs are managed via the OpenAI Assistants API, supporting persistent, contextual conversations.
+
+- **Model Choice**:
+  - `GPT-4o-mini` for lightweight, fast responses in chatbot interactions.
+  - `GPT-4` for high-quality, goal-aligned, and reasoning-heavy course recommendations.
+
+---
+
+#### Frontend (UI)
+
+- **Built with**: `TypeScript`, using modern component-based architecture.
+- **Hosted on**: [Vercel]([https://vercel.com](https://pathway-ai-rgmr.vercel.app)) for fast deployment and seamless CI/CD.
+- **Features**:
+  - Clean layout to host and switch between the two AI agents.
+  - Input forms for structured career/course queries.
+  - Live chat interface for interacting with the assistant.
+ 
+- **Key Pages**:
+  - Landing Page
+    - Modern, animated hero section
+    - Featured degree programs
+    - How it works section
+    - Quick access to course exploration
+  - Explore Page
+    - Course catalog with filtering
+    - Real-time seat availability
+    - Course details and prerequisites
+    - Interactive selection system
+  - Degree Planning
+    - Visual roadmap of courses
+    - Semester-by-semester planning
+    - Progress tracking
+    - Prerequisite visualization
+  - Interactive Elements:
+    -  AI Chatbot
+    - Course recommendations
+    - Career guidance
+    - Prerequisite checking
+    - Real-time assistance
+  - Course Selection
+    - Seat availability indicators
+    - Prerequisites validation
+    - Interactive cards with detailed info
+    - Progress tracking
+  - Smart Features:
+    - Availability Tracking
+    - Real-time seat numbers
+    - Filling rate visualization
+    - Automatic status updates (Open/Limited/Full)
+    - Career Alignment
+    - AI-powered course suggestions
+    - Career path optimization
+    - Skill gap analysis
+---
+
+#### Knowledge Base
+
+- Located in the `Knowledge Base/` directory.
+- Contains university course PDFs for all programs offered by Luddy School to ground the agents with accurate prerequisite and curriculum knowledge.
+- Serves as embedded context for better reasoning and recommendations.
+
+---
+
+
+## Getting Started
+
+### Running Locally
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/smart-course-selector.git
+   cd smart-course-selector
+   ```
+
+2. Install backend dependencies:
+   ```bash
+   pip install openai python-dotenv
+   ```
+
+3. Add your `.env` file with the API key.
+
+4. Run backend logic or test notebooks as needed:
+   ```bash
+   python Agents_Chat.py
+   ```
+
+5. Launch your frontend :
+   ```bash
+   cd frontend
+   npm install
+   npm start
+   ```
+
+---
+
+## Future Enhancements
+
+- Course review aggregator - Integrate anonymized course reviews and ratings to help students make informed choices.
+- Timetable conflict detection - Detect overlapping course times and recommend conflict-free alternatives automatically.
+- Integration with university enrollment APIs - Integrate with institutional APIs to show real-time course availability, registration deadlines, and syllabus links.
+- Learning Style-based Recommendations - Recommend courses based on preferred learning methods (e.g., project-based, lecture-heavy, hands-on labs).
