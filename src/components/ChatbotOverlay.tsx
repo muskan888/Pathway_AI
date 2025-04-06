@@ -193,7 +193,7 @@ const ChatbotOverlay = ({ show, onClose, selectedDegree, selectedProfession }: C
                   className={`max-w-[80%] rounded-lg px-3 py-2 text-sm ${
                     message.sender === "user"
                       ? "bg-primary text-primary-foreground"
-                      : "bg-secondary"
+                      : "bg-secondary text-white"
                   }`}
                 >
                   {message.text}
@@ -201,7 +201,7 @@ const ChatbotOverlay = ({ show, onClose, selectedDegree, selectedProfession }: C
                     className={`text-xs mt-1 ${
                       message.sender === "user"
                         ? "text-primary-foreground/80"
-                        : "text-muted-foreground"
+                        : "text-white/80"
                     }`}
                   >
                     {message.timestamp.toLocaleTimeString([], {
