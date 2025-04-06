@@ -11,6 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { useNavigate } from "react-router-dom";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { motion } from "framer-motion";
 
 // Import our custom components
 import Header from "@/components/Header";
@@ -22,6 +24,7 @@ import CourseList from "@/components/CourseList";
 import { mockCourseData } from "@/data/mockData";
 import { CourseRecommendation } from "@/services/courseSelector";
 import CourseRoadmap from "@/components/CourseRoadmap";
+import { submitUserData } from "@/services/api";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -36,6 +39,7 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedMajor, setSelectedMajor] = useState("all");
   const { toast } = useToast();
+  const [error, setError] = useState<string | null>(null);
 
   // Load saved state from sessionStorage on mount
   useEffect(() => {
@@ -165,13 +169,35 @@ const Index = () => {
     }));
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedProfession) {
+      setError('Please select a profession');
+      return;
+    }
+    setError(null);
+    setIsLoading(true);
+
+    try {
+      const response = await submitUserData({ profession: selectedProfession });
+      if (response.success) {
+        navigate('/recommendations', { state: { recommendations: response.recommendations } });
+      } else {
+        setError('Failed to get recommendations. Please try again.');
+      }
+    } catch (err) {
+      setError('An error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className={`min-h-screen flex flex-col`}>
       <Header 
         darkMode={darkMode} 
         toggleDarkMode={toggleDarkMode} 
-        showSearch={true} 
-        onSearch={handleSearchChange} 
+        showSearch={false}
       />
       
       <main className="flex-1 container py-8">
@@ -428,6 +454,41 @@ const Index = () => {
       >
         <MessageSquare className="h-6 w-6" />
       </Button>
+
+      <Dialog open={isLoading}>
+        <DialogContent className="sm:max-w-md">
+          <div className="flex flex-col items-center justify-center space-y-4 p-4">
+            <motion.div
+              animate={{
+                scale: [1, 1.2, 1],
+                rotate: [0, 180, 360],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center"
+            >
+              <motion.div
+                animate={{
+                  scale: [1, 1.5, 1],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="w-8 h-8 rounded-full bg-primary"
+              />
+            </motion.div>
+            <h3 className="text-lg font-semibold">Getting Recommendations</h3>
+            <p className="text-sm text-muted-foreground text-center">
+              Please wait while we analyze your preferences and generate personalized course recommendations...
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

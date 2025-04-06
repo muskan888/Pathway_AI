@@ -1,10 +1,9 @@
-
-import React from "react";
 import { Sparkles, Search } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 interface HeaderProps {
   darkMode: boolean;
@@ -14,6 +13,8 @@ interface HeaderProps {
 }
 
 const Header = ({ darkMode, toggleDarkMode, showSearch = false, onSearch }: HeaderProps) => {
+  const navigate = useNavigate();
+
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -24,7 +25,7 @@ const Header = ({ darkMode, toggleDarkMode, showSearch = false, onSearch }: Head
   return (
     <header className="border-b bg-background sticky top-0 z-10">
       <div className="container flex justify-between items-center py-4">
-        <div className="flex items-center">
+        <div className="flex items-center cursor-pointer" onClick={() => navigate("/")}>
           <Sparkles className="h-6 w-6 text-primary mr-2" />
           <h1 className="text-xl font-semibold">PathwayAI</h1>
         </div>
