@@ -1,6 +1,5 @@
 # PathwayAI
 ### Smart Course Selector AI Agent
-**Contributors: Rishikesh Kakde, Gayatri Gattani, Rutuja Jangle, Muskan Dhingra**
 
 Welcome to **PathwayAI**, an intelligent AI agent that simplifies the course selection journey for students through a clean, modern UI powered by OpenAI's Agent SDK.
 
